@@ -31,7 +31,7 @@
                     bytes
                 )
             );
-            dynamic script = assembly.CreateObject(
+            dynamic script = assembly.CreateInstance(
                 "css_root+Scripts_Assets_Tree_Create"
             );
             var data = new Dictionary<string, object>
