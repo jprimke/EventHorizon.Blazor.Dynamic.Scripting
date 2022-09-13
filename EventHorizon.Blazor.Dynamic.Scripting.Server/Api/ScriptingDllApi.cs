@@ -12,9 +12,7 @@
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ScriptingDllApi(
-            IWebHostEnvironment webHostEnvironment
-        )
+        public ScriptingDllApi(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
         }
@@ -23,15 +21,10 @@
         [Route("dll")]
         public IActionResult Dll()
         {
-            var path = Path.Combine(
-                _webHostEnvironment.WebRootPath,
-                "scripts",
-                "Scripts.dll"
-            );
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "scripts", "Scripts.dll");
 
-            string asm = CSScript.RoslynEvaluator
-                .CompileAssemblyFromCode(
-                    @"
+            string asm = CSScript.RoslynEvaluator.CompileAssemblyFromCode(
+                                                                          @"
                         using System;
                         using System.Collections.Generic;
                         using System.Threading.Tasks;
@@ -64,22 +57,55 @@
                             }
                         }
                     ",
-                    path
-                );
+                                                                          path
+                                                                         );
 
-            var bytes = System.IO.File.ReadAllBytes(
-                path
-            );
-            var file = Convert.ToBase64String(
-                bytes
-            );
+            var bytes = System.IO.File.ReadAllBytes(path);
+            var file = Convert.ToBase64String(bytes);
 
-            return Ok(
-                new ScriptingDllResult
-                {
-                    DllContent = file,
-                }
-            );
+            return Ok(new ScriptingDllResult { DllContent = file, });
+        }
+
+        [HttpGet]
+        [Route("dll2")]
+        public IActionResult Dll2()
+        {
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "scripts", "Scripts2.dll");
+            string asm = CSScript.RoslynEvaluator.CompileAssemblyFromCode(
+                                                                          @"
+                        using System;
+                        using PSN.TestInterfaces;
+                        
+                        public class Calculator : ICalc
+                        {
+                            public int Add(int a, int b)
+                            {
+                                return a + b;
+                            }
+                            
+                            public int Subtract(int a, int b)
+                            {
+                                return a - b;
+                            }
+                            
+                            public int Multiply(int a, int b)
+                            {
+                                return a * b;
+                            }
+                            
+                            public int Divide(int a, int b)
+                            {
+                                return a / b;
+                            }
+                        }
+                    ",
+                                                                          path
+                                                                         );
+
+            var bytes = System.IO.File.ReadAllBytes(path);
+            var file = Convert.ToBase64String(bytes);
+
+            return Ok(new ScriptingDllResult { DllContent = file, });
         }
     }
 

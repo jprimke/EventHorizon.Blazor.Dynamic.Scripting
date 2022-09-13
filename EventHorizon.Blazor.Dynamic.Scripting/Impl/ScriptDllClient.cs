@@ -38,6 +38,26 @@
 
             return scriptDllResult;
         }
+        
+        public async Task<ScriptDllResult> GetContent2Async()
+        {
+            var scriptDllResult = new ScriptDllResult();
+
+            try
+            {
+                scriptDllResult = await client.GetFromJsonAsync<ScriptDllResult>(
+                                                                                 "api/scripting/dll2"
+                                                                                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+
+            return scriptDllResult;
+        }
+
         public class ScriptDllResult
         {
             public string dllContent { get; set; } = string.Empty;

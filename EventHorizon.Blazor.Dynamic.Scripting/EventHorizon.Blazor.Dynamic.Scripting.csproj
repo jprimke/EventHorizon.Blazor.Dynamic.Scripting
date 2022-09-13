@@ -24,6 +24,7 @@
         <ProjectReference Include="..\EventHorizon.Blazor.Dynamic.Scripting.Events\EventHorizon.Blazor.Dynamic.Scripting.Events.csproj" />
         <ProjectReference Include="..\EventHorizon.Blazor.Dynamic.Scripting.Model\EventHorizon.Blazor.Dynamic.Scripting.Model.csproj" />
         <ProjectReference Include="..\EventHorizon.Blazor.Dynamic.Scripting.Services\EventHorizon.Blazor.Dynamic.Scripting.Services.csproj" />
+        <ProjectReference Include="..\PSN.TestInterfaces\PSN.TestInterfaces.csproj" />
     </ItemGroup>
 
 </Project>
